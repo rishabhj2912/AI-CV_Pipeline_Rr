@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Login Form | CodingLab</title> -->
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="title"><span>Registration</span></div>
+        <span style="padding: 2pt; color: red;" > <%= msg %></span>
+        <form action="/signup" method="post">
+          <div class="row">
+            <i class="fas fa-user"></i>
+            <input type="text" name="user[name]" placeholder="Username" required>
+          </div>
+          <div class="row">
+            <i class="fas fa-user"></i>
+            <input list="browsers" name="user[role]" placeholder="Role">
+            <datalist id="browsers">
+              <option value="Admin">
+              <option value="User">
+            </datalist>
+          </div>
+          
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="user[password]" placeholder="Password" required>
+          </div>
+          
+
+          <div class="row">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="user[cpassword]" placeholder="Confirm Password" required>
+          </div>
+
+          <div class="row button">
+            <input type="submit" value="Signup">
+        </form>
+      </div>
+    </div>
+
+  </body>
+  <script>
+
+  </script>
+</html>

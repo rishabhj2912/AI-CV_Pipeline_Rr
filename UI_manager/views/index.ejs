@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <title>AI/CV Pipeline</title>
+    <link rel = "icon" href = 
+        "/images/eye.png" 
+        type = "image/x-icon">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/animated.css">
+    <link rel="stylesheet" href="/css/owl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" integrity="sha256-aUL5sUzmON2yonFVjFCojGULVNIOaPxlH648oUtA/ng=" crossorigin="anonymous">
+<!--
+
+TemplateMo 563 SEO Dream
+
+https://templatemo.com/tm-563-seo-dream
+
+-->
+
+</head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="" class="logo">
+              <h4>AI / CV Pipeline <img src="/images/logo-icon.png" alt=""></h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+              <li class="scroll-to-section"><a href="#setup">Setup Pipeline</a></li>
+              <li class="scroll-to-section"><a href="#toolbar">CV Toolbar</a></li>
+              <li class="scroll-to-section"><a href="#yourpipeline">Preview Pipeline</a></li>
+              <li class="scroll-to-section"><a href="#history">History</a></li>
+              <li class="scroll-to-section"><a href="#contact">Contact Us</a></li> 
+              <li class="scroll-to-section" id="logout-button"><div class="main-blue-button"><a id="logout-button" onclick="logoutUser()">Logout</a></div></li> 
+              <li class="username"><b><%= mobj[0].user_name %></b></li>
+            </ul>        
+            
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6 align-self-center">
+              <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                <div class="row">
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="info-stat">
+                      <h6>Upload</h6>
+                      <h4>Images</h4>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="info-stat">
+                      <h6>Setup</h6>
+                      <h4>Pipeline</h4>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="info-stat">
+                      <h6>Perform</h6>
+                      <h4>Preprocessing</h4>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <h2>AI / CV Pipeline</h2>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="main-green-button scroll-to-section">
+                      <a href="#setup">Create Pipeline</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                <img src="/images/cv_img6.jpg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!---------------------------------- Upload Component ----------------------------->
+  <% if( mobj[0].flag == "1" ){ %>
+    <div class="upload-comp-class" class="our-services section">
+      <div class="container inner-comp">
+        <div class="row">
+          <div class="col-lg-6 offset-lg-3">
+            <div class="section-heading wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
+              
+              <h2>Upload Component <span style="color:#0c1ea8;">Zip file</span></h2>
+              <form action="/compUpload" method="post" enctype="multipart/form-data">
+                <br>
+                <input type="file" id="inputFile" name="inputFile">
+                <br>
+                <br>
+                <label><b>Component Name</b>&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" name="cname" id="cname" placeholder="Enter Component Name" autocomplete="on">
+                <br>
+                <br>
+                <label><b>Component Description</b>&nbsp;&nbsp;&nbsp;</label>
+                <br>
+                <textarea name="description" type="text" class="form-control" id="description" placeholder="Enter Component Description" required=""></textarea>  
+                <br>
+                <input class="upload-button" type="submit" value="Submit">
+                
+              </form>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } else{ %>  
+    <div></div>
+ <% } %>
+  
+
+  <!---------------------------------- Setup Pipeline ----------------------------->
+  <div id="setup" class="our-services section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
+            <!-- <h6>Our Services</h6> -->
+            <h2>Setup <span>Pipeline</span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="icon">
+                  <img src="/images/service-icon-01.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="right-content">
+                  <h4><a href="#">Upload Image</a></h4>
+                  <form method="POST" action="/upload" enctype=multipart/form-data> 
+                    <input type="file" class="form-control" id="customFile" name="mypic" />
+                    <br>
+                    <label><b>Pipeline Name:</b></label>
+                    <input type="text" name="pname" id="pname" placeholder="Enter Pipeline Name" autocomplete="on" size="17">
+                    <br>
+                    <input class="upload-button" id="button" type="submit" value="Submit" onclick="seturl()">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.4s">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="icon">
+                  <img src="/images/service-icon-02.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="right-content">
+                  <h4><a href="#toolbar">Select CV Tools</a></h4>
+                  <p>Select CV Tools from the CV Toolbar to preprocess uploaded image.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="icon">
+                  <img src="/images/service-icon-03.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="right-content">
+                  <h4><a href="#yourpipeline">Preview Pipeline</a></h4>
+                  <p>Preview your pipeline before the execution.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.6s">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="icon">
+                  <img src="/images/service-icon-03.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="right-content">
+                  <h4><a href="#yourpipeline">Execute</a></h4>
+                  <p>Execute the pipline to apply selected CV Tools for pre-processing on your image.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.7s">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="icon">
+                  <img src="/images/service-icon-01.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="right-content">
+                  <h4><a onclick="sendPipeline()" href="#yourpipeline">View Result</a></h4>
+                  <p>After executing the pipeline, view the intermediate results and final result.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="service-item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="icon">
+                  <img src="/images/service-icon-02.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="right-content">
+                  <h4><a href="#history">History</a></h4>
+                  <p>View Results of your previous pipeline execution in the history.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!---------------------------------- Toolbar ------------------------------------>
+  <div id="toolbar" class="our-services section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
+            <h2>CV <span>Toolbar</span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="features" class="features section">
+    <div class="container">
+      <div class="row">
+
+        <% var len = mobj[0].cdata.length ; %>
+        <% var rem = len % 4 ; %>
+        <% var rows = 0 ; %>
+        <% if ( len > 4 ) { %>
+          <% rows = 1; %>
+        <% } %>
+
+        <% var iter = 1; %>
+        <% for (var i=0; i <= rows ;  i++ ) { %>
+          <div class="col-lg-12">
+            <div class="features-content">
+              <div class="row">
+
+                <% var add = 4 ; %>
+                <% if ( rem != 0 && i == rows ) { %>
+                  <% add = len % 4; %>
+                <%} else { %>
+                  <% add = 4; %>
+                <% } %>
+
+                
+
+                <% for(var j=i*4; j < i*4 + add ; j++) {%>
+                  
+                  <% var myText = mobj[0].cdata[j][1]; %>
+                  
+                  <div class="col-lg-3">
+                    <div class="features-item first-feature wow fadeInUp" data-wow-duration="1s" data-wow-delay="0s" onclick="printPipeline( '<%= myText %>' )">
+                      <div class="first-number number">
+                        <h6><%= iter %> </h6>
+                        <% iter = iter + 1; %>
+                      </div>
+                      <div class="icon"></div>    
+                      <h4><%= mobj[0].cdata[j][1] %></h4>
+                      <div class="line-dec"></div>
+                      <p><%= mobj[0].cdata[j][2] %></p>
+                    </div>
+                  </div>
+                <% } %>
+                
+                <% len = len - 4; %>
+
+              </div>
+            </div>
+          </div>
+
+        <% } %>
+
+        <div class="col-lg-12">
+          <div class="main-green-button scroll-to-section View-Pipeline">
+            <a href="#yourpipeline">View Pipeline</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br> <br>
+  <br> <br>
+  <br> <br>
+  <!--------------------------------------- your Pipeline --------------------------------->
+  <div id="yourpipeline" class="about-us section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="left-image wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+            <img src="/images/cv_img1.jpeg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 align-self-center wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+          <div class="section-heading">
+            <h2>Your <span>Pipeline</span></h2>
+          </div>
+          <div id="list-text">
+            Please Select CV Tools
+          </div>
+          <ul id="comp-list">
+          </ul>
+          <!-- <p><a rel="nofollow" href="https://templatemo.com/tm-563-seo-dream" target="_parent">SEO Dream</a> is free digital marketing CSS template provided by TemplateMo website. You are allowed to use this template for your business websites. Please DO NOT redistribute this template ZIP file on any Free CSS collection websites. You may contact us for more information. Thank you.</p> -->
+          <br>
+          <div href="/viewResult" class="main-green-button"><a onclick="sendPipeline()">View Intermediate Results</a></div>
+
+          <!-- pop up -->
+          
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br> <br>
+  <br> <br>
+  <br>
+  <br> <br>
+  <br> <br>
+  <br> <br>
+  <br> <br>
+  <br> <br>
+
+  <!--------------------------------------- History --------------------------------->
+  <div id="history" class="about-us section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="left-image wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+            <img class="inter-img" src="/images/inter_image.jpg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 align-self-center wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+          <div class="section-heading">
+            <h2><span>History</span></h2>
+          </div>
+          
+          <div id="list-text">
+            <% var len = mobj[0].history.length ; %>
+            
+            <ul id="ul-history">
+            <% for(var i=0 ; i < len ; i++ ) {%>
+
+                <li class="history-list"><a href="/viewResult/?name=<%= mobj[0].history[i].pipeline_name %>" target="_blank" id="hist-list"><img class="icon-img" src="/images/eye2.png" alt=""> &nbsp; &nbsp; &nbsp; <%= mobj[0].history[i].pipeline_name %></a></li>
+
+            <% } %>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div id="portfolio" class="our-portfolio section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+            <h6>Data Foundation System</h6>
+            <h2>Discover More About Our <em>Project</em></h2>
+            <p><a class="history-list" href="https://github.com/Jasika16/Straw-Hats" target="_blank">Github Page Link</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="loop owl-carousel">
+            <div class="item">
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop1.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Poratbale</h4></a>
+                      <span>This application has the ability to be easily transferred to different hardware or software environments</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop2.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Scalable</h4></a>
+                      <span>Has the ability to handle increasing amounts of data and computational load without sacrificing performance.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop5.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Maintainability</h4></a>
+                      <span>The implementation of the application is separated into independent modules, making each module easier to understand, test and refactor independently of others.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop6.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Reliability</h4></a>
+                      <span>The software system consistently performs the specified functions without failure.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop3.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Performance</h4></a>
+                      <span>Performance-related considerations includes Processing Time, Accuracy, Latency, Resource Utilization</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop4.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Security</h4></a>
+                      <span>All the actors on the platform have predefined privileges.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop7.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>Distributed platform</h4></a>
+                      <span>Platform that provides build, development and deployment functionalities for different AI/CV Tools.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="portfolio-item">
+                <div class="thumb">
+                  <img src="/images/loop8.png" alt="">
+                  <div class="hover-content">
+                    <div class="inner-content">
+                      <a href="#"><h4>AI/CV Pipeline</h4></a>
+                      <span>This aids teams in creating, managing, and maintaining the constant inflow of high-quality training data within their computer vision pipelines.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="contact" class="contact-us section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
+          <form id="contact" action="" method="post">
+            <div class="row">
+              <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                  <h6>Contact Us</h6>
+                  <h2>Fill Out The Form Below To <span>Get</span> In <em>Touch</em> With Us</h2>
+                </div>
+              </div>
+              <div class="col-lg-9">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="surname" name="surname" id="surname" placeholder="Surname" autocomplete="on" required>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <fieldset>
+                      <input type="subject" name="subject" id="subject" placeholder="Subject" autocomplete="on">
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>  
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="main-button ">Send Message Now</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="contact-info">
+                  <ul>
+                    <li>
+                      <div class="icon">
+                        <img src="/images/contact-icon-01.png" alt="email icon">
+                      </div>
+                      <a href="#">info@company.com</a>
+                    </li>
+                    <li>
+                      <div class="icon">
+                        <img src="/images/contact-icon-02.png" alt="phone">
+                      </div>
+                      <a href="#">+001-002-0034</a>
+                    </li>
+                    <li>
+                      <div class="icon">
+                        <img src="/images/contact-icon-03.png" alt="location">
+                      </div>
+                      <a href="#">International Institute of Information Technology Prof. C R Rao Road Gachibowli, Hyderabad 500 032. Telangana</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2023 Data Foundation System All Rights Reserved. 
+          
+          <br>Designed by <a rel="nofollow" href="" title="free CSS templates">Straw-Hats</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/owl-carousel.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/imagesloaded.js"></script>
+  <script src="/js/custom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js" integrity="sha256-9AtIfusxXi0j4zXdSxRiZFn0g22OBdlTO4Bdsc2z/tY=" crossorigin="anonymous"></script>
+  
+</body>
+<script>
+  // var url = "";
+  let counter = -1;
+  function printContent( oper_list ){
+    if( counter > oper_list.length - 2 ){
+      counter = counter + 0;
+    }
+    else{
+      counter = counter + 1;
+    }
+    let n = counter + 1;
+    return "Step " + n.toString( ) + " " + oper_list[counter];
+  }
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  function sendPipeline(){
+    var imageFlag = (localStorage.getItem('image') === null);
+    if(imageFlag){
+      alert('Upload image first');
+      return;
+    }
+    sendData = {
+      items : [],
+      image: localStorage.getItem('image')
+    };
+    // tempString
+    listItems = $("#comp-list").find("li").each(function(){
+      var product = $(this).get(0).innerHTML;
+      sendData.items.push({
+        name : product.split('<')[0]
+      });
+      // console.log(product);
+      // rest of code.
+    })
+    console.log(sendData);
+    fetch('http://127.0.0.1:3000/postjson', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendData)
+    }).then(async function(res){
+      console.log("Hello world");
+      console.log(res);
+      // window.location.href = '/viewResult/?name='+localStorage.getItem('pipeline');
+
+      let oper_name = "";
+      let oper_list = [];
+      for (let i = 0; i < sendData.items.length; i++) {
+        oper_name = oper_name + sendData.items[i].name + "\n";
+        oper_list.push( sendData.items[i].name );
+        
+      }
+      console.log(oper_name);
+      //alert('Executing your Pipeline!\n' + oper_name);
+
+      // pop up box =====================
+      let timerInterval
+      Swal.fire({
+        title: 'Executing the Pipeline',
+        html: 'Running <b></b>.',
+        width: 600,
+        padding: '3em',
+        color: '#716add',
+        background: '#fff url(/images/pop10.jpg)',
+        backdrop: `
+          rgba(0,0,123,0.4)
+          url("/images/pop4.jpg")
+          left top
+          no-repeat
+        `,
+        timer: sendData.items.length * 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = printContent( oper_list )
+          }, 1500)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
+      await sleep(sendData.items.length * 2000);
+
+      counter = -1;
+      var link = document.createElement("a");
+      console.log(window.origin + '/viewResult/?name='+localStorage.getItem('pipeline'));
+      link.setAttribute('href', window.origin + '/viewResult/?name='+localStorage.getItem('pipeline'));
+      // link.setAttribute('target', '_blank')
+      link.click();
+
+    })
+      .catch(err => {
+        console.log(err);
+        // localStorage.removeItem('image');
+      });
+      // Swal.getTimerLeft()
+  }
+
+  function seturl(){
+    var fileInput = document.getElementById('customFile');   
+    var pipeline = document.getElementById('pname').value;
+    var filename = fileInput.files[0].name;
+    var pilelineName = pipeline[0].value;
+    console.log(typeof filename);
+    console.log(filename);
+    console.log(typeof pipeline);
+    console.log(pipeline);
+    try{
+      localStorage.setItem('image',filename);
+      localStorage.setItem('pipeline', pipeline);
+    }catch(err){
+      alert(err);
+    }
+  }
+    
+  </script>
+
+</html>

@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <title>AI/CV Pipeline</title>
+    <link rel = "icon" href = 
+        "/images/eye.png" 
+        type = "image/x-icon">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/animated.css">
+    <link rel="stylesheet" href="/css/owl.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!--
+
+TemplateMo 563 SEO Dream
+
+https://templatemo.com/tm-563-seo-dream
+
+-->
+
+</head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- *****==================== Header Area Start ========================== ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container result-header">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <h4>AI / CV Pipeline <img src="/images/logo-icon.png" alt=""></h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="/home" class="active">Home</a></li>
+              <li class="scroll-to-section"><div class="main-blue-button"><a href="#results">View Results</a></div></li> 
+            </ul>        
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container result-home">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6 align-self-center home-data">
+              <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                <div class="row">
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="info-stat">
+                      <h6>View</h6>
+                      <h4>Intermediate Results</h4>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-4">
+                    <div class="info-stat">
+                      <h6>View</h6>
+                      <h4>History</h4>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <h2>AI / CV Pipeline</h2>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="main-green-button scroll-to-section">
+                      <a href="#results">View Results</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 home-image">
+              <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                <img src="/images/cv_img6.jpg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- *****==================== Slide Show Results ========================== ***** -->
+  <div id="results" class="our-services section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
+            <h2>Pipeline Output <span>Stepwise</span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="w3-content w3-display-container">
+  
+    <% var len = oper.length ; %>
+    <% for(var i=0 ; i < len ; i++ ) {%>
+
+        <% var slideNum = oper[i][1] ; %>
+        <% var slideText = oper[i][3] ; %>
+        <% var image_path = oper[i][2] ; %>
+        <div class="w3-display-container mySlides">
+            <img src=<%= image_path %> style="width:100%">
+            <div class="w3-display-topleft w3-large w3-container w3-padding-16 w3-black">
+                Step <%= slideNum %>: <%= slideText %>
+            </div>
+        </div>
+
+    <% } %>
+    <!-- <div class="w3-display-container mySlides">
+        <img src="/display/img2.jpg" style="width:100%">
+        <div class="w3-display-topleft w3-large w3-container w3-padding-16 w3-black">
+            Beautiful Mountains
+        </div>
+    </div>
+    
+    <div class="w3-display-container mySlides">
+        <img src="/display/1-op.jpg" style="width:100%">
+        <div class="w3-display-topleft w3-large w3-container w3-padding-16 w3-black">
+            Beautiful Mountains
+        </div>
+    </div>
+    
+    <div class="w3-display-container mySlides">
+        <img src="/display/2-op.jpg" style="width:100%">
+        <div class="w3-display-topleft w3-large w3-container w3-padding-16 w3-black">
+        Beautiful Mountains
+        </div>
+    </div>
+    
+    <div class="w3-display-container mySlides">
+        <img src="/display/3-op.jpg" style="width:100%">
+        <div class="w3-display-topleft w3-large w3-container w3-padding-16 w3-black">
+            Beautiful Mountains
+        </div>
+    </div> -->
+
+    
+    
+    <button class="w3-button w3-display-left w3-black" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="w3-button w3-display-right w3-black" onclick="plusDivs(1)">&#10095;</button>
+  
+  </div>
+  
+  <script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+    
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+    
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = x.length}
+        for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";  
+        }
+        x[slideIndex-1].style.display = "block";  
+    }
+  </script>
+  
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2023 Data Foundation System All Rights Reserved. 
+          
+          <br>Designed by <a rel="nofollow" href="" title="free CSS templates">Straw-Hats</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/owl-carousel.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/imagesloaded.js"></script>
+  <script src="/js/custom.js"></script>
+  
+</body>
+
+</html>
