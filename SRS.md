@@ -43,6 +43,12 @@ Illustrate the high-level architecture of the AI/CV pipeline, emphasizing its in
      2. Retrieve and preprocess data.
    - Usecase/Activity Diagram: [Link to Diagram]
 
+5. **Addition of new Components**
+   - Description: Add new components to the system like segmentation, object detection, and classification.
+   - Steps:
+     1. Develop new components.
+     2. Integrate the components with the system.
+   - Usecase/Activity Diagram: [Link to Diagram]
 5. **Deployment with Data Foundation Hardware**
    - Description: Deploy the system with compatible data foundation hardware.
    - Steps:
