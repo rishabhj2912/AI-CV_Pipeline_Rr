@@ -2,13 +2,13 @@
 const express = require("express");
 const app = express();
 const Minio = require('minio')
-var mysql = require('mysql')
+var mysql = require('mysql2')
 const fs = require('fs')
 const decompress = require("decompress");
 require('dotenv').config();
 
 app.use(express.json())
-var comp_port=8010
+var comp_port=8008
 
 const port = process.env.Node_manager_port || 8086;
 // My sql conection
@@ -35,7 +35,9 @@ var minioClient = new Minio.Client({
   port: 9000,
   useSSL: false,
   accessKey: process.env.MinIO_accesskey,
-  secretKey: process.env.MinIO_secretkey
+  secretKey: process.env.MinIO_secretkey,
+  api:"s3v1",
+  path:"auto"
 });
 
 
@@ -98,9 +100,10 @@ app.post('/deploy', (req,res)=>{
     comp_folder = component_file_name.split(".");
 
     var size = 0
-
+    console.log("FUCKKKKKK");
+    console.log(component_file_name);
     // Component Zip file downloaded from minio
-    minioClient.fGetObject('comp-upload', component_file_name, component_file_name, function(err) {
+    minioClient.fGetObject('datadrive-dev', component_file_name, component_file_name, function(err) {
     if (err) {
       return console.log(err);
     }
@@ -109,7 +112,7 @@ app.post('/deploy', (req,res)=>{
 
 
     // Index Zip file downloaded from minio
-    minioClient.fGetObject('comp-upload', "index.zip", "index.zip", function(err) {
+    minioClient.fGetObject('datadrive-dev', "index.zip", "index.zip", function(err) {
       if (err) {
         return console.log(err);
       }

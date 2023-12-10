@@ -3,7 +3,7 @@ const path = require("path")
 const multer = require("multer")
 const Minio = require('minio')
 const ejs = require('ejs')
-const mysql = require("mysql")
+const mysql = require("mysql2")
 const jwt = require('jsonwebtoken')
 const axios = require('axios')
 const cookie_parser = require('cookie-parser')
@@ -13,7 +13,6 @@ var rimraf = require("rimraf");
 const crypto = require('crypto');
 require('dotenv').config();
 
-// const axios = require('axios')
 
 const app = express();
 var cors = require('cors');
@@ -45,14 +44,15 @@ mysqlconnection.connect(function(err){
 });
 
 
-
-
 var minioClient = new Minio.Client({
   endPoint: process.env.MinIO_endpoint,
   port: 9000,
   useSSL: false,
   accessKey: process.env.MinIO_accesskey,
-  secretKey: process.env.MinIO_secretkey
+  secretKey: process.env.MinIO_secretkey,
+  api:"s3v1",
+  path:"auto"
+
 });
 
 //Encrypting text
@@ -101,6 +101,7 @@ app.get('/', (req,res)=>{
   res.render('login.ejs', {msg: ""});
 })
 
+// 
 app.post("/", function(req,res){
   username = req.body.user.name;
   password = req.body.user.password;
@@ -229,7 +230,8 @@ app.get("/home", (req, res) => {
 
     // Fetch History
     let hist_query = 'SELECT ?? FROM ?? WHERE ?? = ? GROUP BY ??'
-    let pipeline_query = mysql.format( hist_query, [ "pipeline_name", "dfs.operation", "user_id", decoded.userid, "id" ] );
+    console.log( decoded.userid );
+    let pipeline_query = mysql.format( hist_query, [ "pipeline_name", "dfs.operation", "user_id", decoded.userid, "pipeline_name" ] );
     console.log(pipeline_query);
 
     mysqlconnection.query(pipeline_query, (err,pipeline_data)=>{
@@ -248,10 +250,10 @@ app.get("/home", (req, res) => {
             console.log(err);
             return;
           }
-          // console.log(data[0]);
+          console.log(data);
           if (data.length == 1){
-            console.log(data);
-            console.log(data[0].role);
+            // console.log(data);
+            // console.log(data[0].role);
 
             let comp_select_query = 'SELECT * FROM ??';
             let component_query = mysql.format( comp_select_query, ["dfs.components"]);
@@ -263,19 +265,18 @@ app.get("/home", (req, res) => {
                 console.log(err);
                 return;
               }
-
               let component_data = []
 
-              for (let i = 1; i < data.length; i++) {
+              for (let i = 0; i < data.length; i++) {
                 // text += "The number is " + i + "<br>";
-                let temp = [
+                var temp = [
                   data[i].id, //cid
                   data[i].name, //cname
                   data[i].description //cdesc
                 ]
                 component_data.push(temp);
               }
-              console.log(component_data);
+              // console.log(component_data);
               if( user_role == 1 ){
                 const obj = {
                   flag:"1",
@@ -283,6 +284,7 @@ app.get("/home", (req, res) => {
                 };
                 // res.render('index.ejs', {obj});
                 var multiObj = [{flag:"1", cdata: component_data, history: pipeline_data, user_name: decoded.username }];
+                console.log(multiObj);
                 res.render('index.ejs', { mobj: multiObj } );
               }
               else{
@@ -329,11 +331,14 @@ app.post("/upload", multer({storage: multer.memoryStorage()}).single("mypic"),fu
       console.log(err);
       res.send("Error uploading image.");
     }
-    console.log(data[0]);
+    console.log("data"+data);
     var oid = data[0].id+1;
     var uid = decoded.userid;
     var imgpath = String(oid) + '/' + req.file.originalname;
-    let insert_query = 'INSERT INTO dfs.operation(id,user_id,component_id,step,input,output,pipeline_name)VALUES(?,?,0,0,?,?,?)';
+    console.log(imgpath);
+    // HARD CODEDD WATCH IT
+    // Get component id from component name and insert into operation table
+    let insert_query = 'INSERT INTO dfs.operation(id,user_id,component_id,step,input,output,pipeline_name)VALUES(?,?,17,0,?,?,?)';
     insert_query = mysql.format(insert_query, [oid,uid,imgpath,imgpath,req.body.pname]);
     console.log(insert_query);
     mysqlconnection.query(insert_query, (err,data)=>{
@@ -407,7 +412,7 @@ app.post("/compUpload", multer({storage: multer.memoryStorage()}).single("inputF
           let comp_query = mysql.format(insert_query, ["dfs.components", comp_name, url_temp, uid, comp_desc, req.file.originalname ]);
 
           console.log( "COMP QUERY:" )
-          console.log( comp_query );
+          // console.log( comp_query );
 
           mysqlconnection.query( comp_query, (err,data)=>{
             if(err){
@@ -428,10 +433,10 @@ app.post("/compUpload", multer({storage: multer.memoryStorage()}).single("inputF
       
             axios.post(process.env.Node_manager_url, sendData)
             .then(function (response) {
-              console.log(response);
+              console.log("fuc");
             })
             .catch(function (error) {
-              console.log(error);
+              console.log("FUCK");
             });
 
 
@@ -440,16 +445,16 @@ app.post("/compUpload", multer({storage: multer.memoryStorage()}).single("inputF
             let cid_query = mysql.format(select_query, ["dfs.components", "name", comp_name]);
             mysqlconnection.query(cid_query, (err,data)=>{
               if(err){
-                console.log(err);
+                console.log("THIISSSSS"+err);
                 return;
               }
-              console.log( "CID: " )
-              console.log( data[0].id );
+              // console.log( "CID: " )
+              // console.log( data[0].id +"HERE");
               //res.render('index.ejs', {flag:"1"});
               res.render('/home');
             });
             
-
+            console.log("comp upload done")
           });
 
         }else{ 
@@ -465,23 +470,23 @@ app.post("/compUpload", multer({storage: multer.memoryStorage()}).single("inputF
 
 
 app.post("/postjson", function (req, res) {
+
   try{
     decoded = jwt.verify(req.cookies['access_token'], process.env.Token_enc_key);
   }catch(err){
+
     res.redirect('/');
   } 
-  console.log(decoded);
+  
   let query = 'SELECT * FROM dfs.operation WHERE user_id = ? ORDER BY id DESC';
   query = mysql.format(query, [decoded.userid]);
-  console.log(query);
   mysqlconnection.query(query, (err,data)=>{
     if(err){
-      console.log(err);
+      console.log("hi"+err);
+      
       //res.send("Error sending pipeline.");
     }
-    console.log(req.body);
     var imgpath = String(data[0].id) + '/' + req.body.image;
-    console.log(data[0]);
     sendData = {
       oid : data[0].id,
       pipeline_name: data[0].pipeline_name,
@@ -489,6 +494,8 @@ app.post("/postjson", function (req, res) {
       imgpath: imgpath,
       pipeline: req.body.items
     };
+    console.log(sendData);
+    console.log("=============================================")
     axios.post(process.env.Scheduler_url,sendData)
     .then(resp => {
       console.log("response recieved");
@@ -497,7 +504,8 @@ app.post("/postjson", function (req, res) {
       // res.redirect(`/viewResult/?name=${data[0].pipeline_name}`);
       res.send({msg:"Pipeline executed sucessfully"});
     })
-    .catch(err => console.log(err));
+    .catch(
+      err => console.log("HERE IT IS"+err));
   });
 
   // res.send({msg:"Hello"});
@@ -510,7 +518,7 @@ app.get("/viewResult", (req, res) => {
     // console.log("Current directory:", __dirname);
 
     console.log("======================== /viewResult ==========================");
-
+    // console.log(req);
     try{
       decoded = jwt.verify(req.cookies['access_token'], process.env.Token_enc_key);
     }catch(err){
@@ -519,6 +527,8 @@ app.get("/viewResult", (req, res) => {
     // console.log(decoded.userid);
 
     let pipeline_name = req.query.name;
+    console.log("pipe"+ pipeline_name );
+    console.log("user"+ decoded.userid );
 
     let get_op_id = 'SELECT ?? FROM ?? WHERE ?? = ? AND ?? = ?';
     get_op_id = mysql.format( get_op_id, ["id", "dfs.operation", "pipeline_name", pipeline_name, "user_id", decoded.userid] );
@@ -529,7 +539,8 @@ app.get("/viewResult", (req, res) => {
         console.log(err);
         res.send("Error sending component name.");
       }
-      // console.log( op_data[0].id );
+      console.log("decoded");
+      console.log( op_data );
 
 
       
@@ -562,7 +573,7 @@ app.get("/viewResult", (req, res) => {
                 console.log( data );
                 
                 for(var i = 0; i < data.length ; i++){
-
+                  console.log(">>>>>>>>>>>>>>>>>>",i,"<<<<<<<<<<<<<<<<<<<<")
                   let cname_query = 'SELECT name FROM dfs.components WHERE id = ?';
                   cname_query = mysql.format( cname_query, [ data[i].component_id ] );
                   
@@ -588,13 +599,14 @@ app.get("/viewResult", (req, res) => {
                     send_data.push( cur_data );
 
                     let local_path = __dirname + '/public' + image_path;
+                    console.log("local path: ", local_path);
                     // download files from mino to local storage ===============================
                     minioClient.fGetObject( process.env.MinIO_img_Bucket , image_name, local_path, function(err) {
                       if (err) {
-                          console.log("Error downloading");
+                          console.log("Error downloading", i);
                           return console.log(err);
                       }
-                          console.log('==============success in file download');
+                          console.log('==============success in file download', image_name, i);
                       })
 
                   });
@@ -604,12 +616,12 @@ app.get("/viewResult", (req, res) => {
                   console.log( send_data );
                   // console.log( send_data[0][2] );
       
-                  let old_path = './' + op_id;
-                  let new_path = './public/display/' + op_id + '/';
-                  fs1.move(old_path, new_path, err => {
-                    if(err) return console.error(err);
-                    console.log('===================== success in move file!');
-                  });
+                  // let old_path = './' + op_id;
+                  // let new_path = './public/display/' + op_id + '/';
+                  // fs1.move(old_path, new_path, err => {
+                  //   if(err) return console.error("YAHA"+err);
+                  //   console.log('===================== success in move file!');
+                  // });
       
                   console.log("========== Data Send to front end =============");
                   res.render('result.ejs', { oper : send_data } );
@@ -666,7 +678,7 @@ app.get("/viewResult", (req, res) => {
                   if (err) {
                       return console.log(err);
                   }
-                      console.log('success in file download');
+                      console.log('success in file download!');
                 })
 
 
@@ -677,14 +689,15 @@ app.get("/viewResult", (req, res) => {
               console.log( send_data );
               // console.log( send_data[0][2] );
 
-              let old_path = './' + op_id;
-              let new_path = './public/display/' + op_id + '/';
-              fs1.move(old_path, new_path, err => {
-                if(err) return console.error(err);
-                console.log('success!');
-              });
+              // let old_path = './' + op_id;
+              // let new_path = './public/display/' + op_id + '/';
+              // fs1.move(old_path, new_path, err => {
+              //   if(err) return console.error(err);
+              //   console.log('success!');
+              // });
 
               console.log("========== Data Send to front end =============");
+              console.log({oper: send_data});
               res.render('result.ejs', { oper : send_data } );
             }, 4000);
 

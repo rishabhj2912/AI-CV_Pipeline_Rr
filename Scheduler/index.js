@@ -9,7 +9,7 @@ app.use(express.json())
 const port = process.env.Scheduler_port || 8001;
 
 //SQL Connection
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var mysqlconnection = mysql.createConnection({
   host:process.env.DB_host,
   user:process.env.DB_user,
@@ -78,7 +78,7 @@ app.post("/createPipeline", async function (req, res) {
             oid:req.body.oid,
             step:step
           };   
-
+          console.log("FUCKK")
           console.log(data[0].url);
           console.log(sendData);
 
@@ -109,6 +109,7 @@ app.post("/createPipeline", async function (req, res) {
               });
             });
             // console.log(temp_value2);
+            return temp_value2;
           }
           var value1 = await func2();
           console.log(value1);

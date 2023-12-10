@@ -4,7 +4,8 @@ from minio.error import S3Error
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv()   
+
 
 def preprocess():
     from src.src import simple_edge_detection, cv2
@@ -13,14 +14,13 @@ def preprocess():
     cv2.imwrite("op.jpg", img) 
     
 if __name__ == '__main__':
-    # print(os.environ.get('MinIO_endpoint') + ":" + os.environ.get('MinIO_port'))
-    endpoint = os.environ.get('MinIO_endpoint') + ":" + os.environ.get('MinIO_port')
+    endpoint = "10.8.0.31:9000"
     client = Minio(
         # "play.min.io",
-        "127.0.0.1:9000",
+        "10.8.0.31:9000",
         secure=False,
-        access_key = os.environ.get("MinIO_accesskey"),
-        secret_key = os.environ.get("MinIO_secretkey")
+        access_key = "MzsWV9nrzt0a4jDjdORY",
+        secret_key = "aRKv3GgGROmV7eU65JUNsrXxktZwAtEUOzGdn21W"
     )
 
     image_url = sys.argv[1]
@@ -29,17 +29,25 @@ if __name__ == '__main__':
     while not flag:
         try:
             client.fget_object(
-                os.environ.get("MinIO_img_Bucket"), image_url, "ip.jpg",
+                "datadrive-dev", image_url, "ip.jpg",
             )
             flag = True
         except:
             flag = False
+    print(flag)
     print("Object Fetched sucessfully")
     new_img=sys.argv[2]
     print(new_img)
     preprocess()
     print("preprocessed")
-    client.fput_object(
-        os.environ.get("MinIO_img_Bucket"), new_img, "op.jpg",
-    )
+    flag = False
+    while not flag:
+        try:
+            client.fput_object(
+            "datadrive-dev", new_img, "op.jpg",
+        )
+            flag = True
+        except:
+            flag = False
+    print(flag)
     print("Image Uploaded sucessfully")
