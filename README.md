@@ -8,15 +8,7 @@
 
 **Project Category:**  **AI / CV Pipeline**
 
-**Team Name:**  **Straw Hats**
 
-**Team Members:**
-
-| **Name** | **Roll No.** |
-| --- | --- |
-| Jasika Shah | 2021201063 |
-| Vishal Mani Mishra | 2021201050 |
-| Nileshkumar Jha | 2021202017 |
 
 ![Shape2](RackMultipart20230206-1-e2q3zn_html_237499165a11f2b9.gif)
 
